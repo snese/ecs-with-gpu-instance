@@ -9,7 +9,7 @@ Deep Learning AMI comes with CUDA 9 environment configured by default, but can b
 
 ## AMI for GPU on ECS
 
-We'll prebuild the nvidia docker 2 into the base AMI.
+We'll prebuild the **nvidia docker 2** into the base AMI.
 
 Reference the document, "[Creating a GPU Workload AMI](https://docs.aws.amazon.com/batch/latest/userguide/batch-gpu-ami.html)", install [nvidia-docker](https://github.com/NVIDIA/nvidia-docker), the containing driver for GPU on AMI and create AMI.
 
@@ -27,11 +27,28 @@ ECS actually create the CloudFormation template behind the scenes. In order to c
 
 On the AWS CloudFormation console select **EC2ContainerService - ${cluster name}** (my cluster name is **ECS-GPU-Cluster**) and **Update Stack**.
 
-![img1]
-
+![img1](https://github.com/snese/ecs-with-gpu-instance/blob/master/img/01_update_stack.png)
 
 In **Specify stack details** update the **EcsAmiId** and **EcsInstanceType**
 
-![img2]
+> Note: In this guide, my **EcsAmiId** is ami-020d1cd527153432a and **EcsInstanceType** use p2.xlarge please input yours.
 
-## Create a TaskDifinition for GPU
+![img2](https://github.com/snese/ecs-with-gpu-instance/blob/master/img/02_specify_stack_details.png)
+
+## Create new Task Definition for GPU Cluster
+
+Create the Task Definition and choose the EC2 launch type.
+
+> Note: Farget is not support GPU instance currently.
+
+![img3](https://github.com/snese/ecs-with-gpu-instance/blob/master/img/03_create_new_task_definition.png)
+
+There is no more specific step need to remind just follow the document "[Creating a Task Definition](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/create-task-definition.html)" as usual.
+
+With this, the environment for GPU calculation from ECS had done.
+
+## Finally
+
+Scale your instance and task at least 1, start your service and enjoy your ride.
+
+
